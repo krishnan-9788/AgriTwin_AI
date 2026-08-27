@@ -1,0 +1,61 @@
+{
+  "categorical_features": [
+    "Area",
+    "Item"
+  ],
+  "dataset_path": "C:\\Users\\ACER\\Desktop\\THANA\\ACADEMIC\\career\\Course_06_Develop Production-Ready ML APIs with MLOps\\crop-yield-prediction-mlops\\data\\yield_df.csv",
+  "dataset_rows": 25932,
+  "dataset_sha256": "3d47d3fdc35950b5333348c0d28dbe5534346237813dd1db9d4c26f2935d888b",
+  "environment": {
+    "joblib": "1.5.2",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "python": "3.12.2",
+    "scikit-learn": "1.7.2"
+  },
+  "feature_columns": [
+    "Area",
+    "Item",
+    "Year",
+    "average_rain_fall_mm_per_year",
+    "pesticides_tonnes",
+    "avg_temp"
+  ],
+  "hf_repo_id": "your-username/crop-yield-regressor",
+  "license": "mit",
+  "metrics": {
+    "mae": 8942.26475087505,
+    "mean_prediction": 77857.59361000948,
+    "mse": 263803589.27739584,
+    "r2": 0.9636027103933975,
+    "rmse": 16242.031562504608
+  },
+  "model_artifact": "crop_yield_model.joblib",
+  "model_id": "crop-yield-regressor",
+  "model_params": {
+    "l2_regularization": 0.0,
+    "learning_rate": 0.08,
+    "max_iter": 300,
+    "max_leaf_nodes": 31,
+    "random_state": 42
+  },
+  "model_path": "C:\\Users\\ACER\\Desktop\\THANA\\ACADEMIC\\career\\Course_06_Develop Production-Ready ML APIs with MLOps\\crop-yield-prediction-mlops\\artifacts\\models\\v3.0.0\\crop_yield_model.joblib",
+  "model_sha256": "22bd7a92a459ab3534136cb4c9c4a2ada9432a11cacc7fb5dc0bb36eab164077",
+  "model_type": "HistGradientBoostingRegressor",
+  "model_version": "v3.0.0",
+  "numeric_features": [
+    "Year",
+    "average_rain_fall_mm_per_year",
+    "pesticides_tonnes",
+    "avg_temp"
+  ],
+  "preprocessor_artifact": "crop_yield_preprocessor.joblib",
+  "preprocessor_path": "C:\\Users\\ACER\\Desktop\\THANA\\ACADEMIC\\career\\Course_06_Develop Production-Ready ML APIs with MLOps\\crop-yield-prediction-mlops\\artifacts\\models\\v3.0.0\\crop_yield_preprocessor.joblib",
+  "preprocessor_sha256": "e29d5f6b2dd707777a5d8f780239fab19220de143f6a59895c00a09fd9803bae",
+  "random_state": 42,
+  "target_column": "hg/ha_yield",
+  "test_rows": 5187,
+  "test_size": 0.2,
+  "train_rows": 20745,
+  "trained_at": "2026-07-04T07:13:01.715356+00:00"
+}
