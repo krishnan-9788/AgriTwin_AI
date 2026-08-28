@@ -13,3 +13,4 @@ transformers
 Pillow
 safetensors
 email-validator
+requests
