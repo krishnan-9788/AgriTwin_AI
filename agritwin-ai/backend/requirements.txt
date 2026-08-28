@@ -14,3 +14,4 @@ Pillow
 safetensors
 email-validator
 requests
+joblib
