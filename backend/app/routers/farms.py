@@ -34,6 +34,40 @@ def create_farm(farm: farm_schema.FarmCreate, db: Session = Depends(database.get
     except Exception as e:
         logger.error(f"Error creating farm: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+@router.get("/{id}", response_model=farm_schema.FarmResponse)
+def get_farm(
+    id: int,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    try:
+        logger.info(f"Fetching farm ID {id} for user {current_user.email}")
+
+        farm = (
+            db.query(models.Farm)
+            .filter(
+                models.Farm.id == id,
+                models.Farm.user_id == current_user.id
+            )
+            .first()
+        )
+
+        if not farm:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Farm not found"
+            )
+
+        return farm
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching farm ID {id}: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal Server Error: {str(e)}"
+        )        
 
 @router.put("/{id}", response_model=farm_schema.FarmResponse)
 def update_farm(id: int, farm: farm_schema.FarmUpdate, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):

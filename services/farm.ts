@@ -58,7 +58,7 @@ export async function createFarm(data: FarmData): Promise<FarmResponse> {
     soil_type: data.soilType,
     water_source: data.waterSource,
     current_crop: data.currentCrop,
-    planting_date: data.plantingDate,
+    planting_date: data.plantingDate.length === 10 ? `${data.plantingDate}T00:00:00` : data.plantingDate,
   });
 
   return normalizeFarm(response.data);
@@ -109,5 +109,6 @@ export async function getFarmSuitability(id: number | string) {
   const response = await api.get(`/farms/${id}/suitability`);
   return response.data;
 }
+
 
 
