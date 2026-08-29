@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken, removeToken } from './storage';
 
-const API_URL = 'https://agritwin-ai-1-x2if.onrender.com';
+const API_URL = 'https://agritwin-ai-1-3qqo.onrender.com';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -52,3 +52,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+
