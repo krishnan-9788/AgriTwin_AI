@@ -1,0 +1,12 @@
+node_modules/
+.git/
+.expo/
+.env
+.env.local
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+scratch/
+*.log
