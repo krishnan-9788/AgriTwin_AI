@@ -1529,7 +1529,7 @@ export function Crop3DRenderer(props: Crop3DRendererProps) {
 
   // Route to the correct procedural generator
   if (name === 'paddy') return <PaddyRenderer {...commonProps} />;
-  if (name === 'jasmine') return <JasmineRenderer {...commonProps} />;
+  if (name === 'jasmine' || name === 'arabian jasmine' || name === 'crossandra' || name === 'chrysanthemum') return <JasmineRenderer {...commonProps} />;
   if (name === 'banana') return <BananaRenderer {...commonProps} />;
   if (name === 'mango') return <MangoRenderer {...commonProps} />;
   if (name === 'maize') return <MaizeRenderer {...commonProps} />;

@@ -62,7 +62,11 @@ def predict_irrigation_need(db: Session, farm_id: int, light_intensity_lux: floa
     hour_of_day = datetime.datetime.now().hour
     
     if light_intensity_lux is None:
-        raise ValueError("Light intensity (lux) is a required ML feature but was not provided.")
+        # Provide a sensible default based on hour of day since IoT lux sensors may not be connected
+        if 6 <= hour_of_day <= 18:
+            light_intensity_lux = 50000.0  # Daytime average lux
+        else:
+            light_intensity_lux = 0.0  # Nighttime
 
     # 5. Prepare model input array
     # Model features: ['suhu_udara(C)', 'kelembapan_udara(%)', 'intensitas_cahaya(lux)', 'kelembapan_tanah(%)', 'jam']

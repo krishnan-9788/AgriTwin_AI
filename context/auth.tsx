@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }).join(''));
             const payload = JSON.parse(jsonPayload);
             
-            if (payload.exp && payload.exp * 1000 < Date.now()) {
-              console.warn("Token expired on startup. Clearing.");
+            if (!payload.sub || (payload.exp && payload.exp * 1000 < Date.now())) {
+              console.warn("Token expired or invalid on startup. Clearing.");
               await removeToken();
               setUser(null);
             } else {
@@ -72,42 +72,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string, pass: string) => {
     try {
-      setLoading(true);
       const response = await api.post('/auth/login', { email, password: pass });
       const { access_token } = response.data;
       await setToken(access_token);
-      // Ideally fetch the user info. We set a dummy one to satisfy layout redirect
       setUser({ email, displayName: email.split('@')[0] });
     } catch (error) {
       console.error(error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (name: string, email: string, pass: string, confirmPass: string) => {
     try {
-      setLoading(true);
       await api.post('/auth/register', { name, email, password: pass, confirm_password: confirmPass });
       await login(email, pass);
     } catch (error) {
       console.error(error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
   const logout = async () => {
     try {
-      setLoading(true);
       await removeToken();
       setUser(null);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 

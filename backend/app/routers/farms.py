@@ -148,7 +148,7 @@ def predict_yield(id: int, sim_date: str = None, db: Session = Depends(database.
         
         duration = 120
         # Check standard durations to match digital twin exactly
-        CROP_DURATIONS = {"Corn": 120,"Maize": 100,"Wheat": 120,"Rice": 135,"Paddy": 135,"Tomato": 90,"Potato": 100,"Onion": 110,"Cotton": 160,"Jasmine": 130,"Banana": 300, "Mango": 365, "Sugarcane": 365, "Groundnut": 120, "Chilli": 150}
+        CROP_DURATIONS = {"Corn": 100,"Maize": 100,"Wheat": 120,"Rice": 135,"Paddy": 135,"Tomato": 90,"Potato": 100,"Onion": 110,"Cotton": 160,"Jasmine": 130, "Arabian Jasmine": 130, "Crossandra": 150, "Chrysanthemum": 120, "Banana": 300, "Mango": 365, "Sugarcane": 365, "Groundnut": 120, "Chilli": 150, "Turmeric": 240, "Carrot": 80}
         for key, val in CROP_DURATIONS.items():
             if key.lower() in crop.lower():
                 duration = val
@@ -222,19 +222,26 @@ def get_farm_digital_twin(id: int, sim_date: str = None, db: Session = Depends(d
 
         # 1. Base Crop Duration
         CROP_DURATIONS = {
-            "Corn": 120,
-            "Maize": 120,
-            "Wheat": 150,
-            "Rice": 120,
-            "Paddy": 120,
+            "Corn": 100,
+            "Maize": 100,
+            "Wheat": 120,
+            "Rice": 135,
+            "Paddy": 135,
             "Tomato": 90,
             "Potato": 100,
             "Onion": 110,
             "Cotton": 160,
-            "Jasmine": 120,
-            "Arabian Jasmine": 120,
-            "Crossandra": 100,
-            "Chrysanthemum": 90
+            "Jasmine": 130,
+            "Arabian Jasmine": 130,
+            "Crossandra": 150,
+            "Chrysanthemum": 120,
+            "Banana": 300,
+            "Mango": 365,
+            "Sugarcane": 365,
+            "Groundnut": 120,
+            "Turmeric": 240,
+            "Chilli": 150,
+            "Carrot": 80
         }
         
         crop_name = farm.current_crop or "Unknown"
@@ -323,16 +330,8 @@ def get_farm_digital_twin(id: int, sim_date: str = None, db: Session = Depends(d
         if harvest_days < 0: harvest_days = 0
 
         # 4. Growth Stage
-        if progress < 20:
-            growth_stage = "Seedling"
-        elif progress < 50:
-            growth_stage = "Vegetative"
-        elif progress < 70:
-            growth_stage = "Branching"
-        elif progress < 100:
-            growth_stage = "Flowering"
-        else:
-            growth_stage = "Maturity / Harvest Ready"
+        # Pass empty string to let the frontend's getCropStageName handle the crop-specific stages
+        growth_stage = ""
 
         if progress >= 100:
             recommendations.append("Crop is ready for harvest!")
@@ -350,8 +349,10 @@ def get_farm_digital_twin(id: int, sim_date: str = None, db: Session = Depends(d
         
         if settings.weather_api_key and farm.location:
             try:
+                import urllib.parse
+                safe_location = urllib.parse.quote(farm.location)
                 # We'll just fetch current weather, no 404 bubbling if fails
-                url = f"https://api.openweathermap.org/data/2.5/weather?q={farm.location}&appid={settings.weather_api_key}&units=metric"
+                url = f"https://api.openweathermap.org/data/2.5/weather?q={safe_location}&appid={settings.weather_api_key}&units=metric"
                 res = requests.get(url, timeout=3)
                 if res.status_code == 200:
                     wdata = res.json()

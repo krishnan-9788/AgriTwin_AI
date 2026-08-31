@@ -71,6 +71,13 @@ def predict_disease(image_bytes: bytes):
         # Clean up disease name for frontend
         disease_name = disease_name.replace("___", " - ").replace("_", " ")
         
+        # Explicitly free memory to prevent OOM on 512MB RAM Render instance
+        del inputs, outputs, logits, probabilities, image
+        import gc
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        
         return {
             "success": True,
             "disease": disease_name,

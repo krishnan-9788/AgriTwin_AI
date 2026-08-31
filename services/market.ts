@@ -25,7 +25,7 @@ export async function getMarketPrices(
   district: string,
   commodity: string
 ): Promise<MarketPriceResponse> {
-  const response = await api.get('/market-prices', {
+  const response = await api.get('/api/market-prices', {
     params: {
       state,
       district,

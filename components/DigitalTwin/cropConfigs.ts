@@ -208,6 +208,46 @@ export const CROP_CONFIGS: CropConfig[] = [
       { name: 'Tuber Bulking', endDay: 90 },
       { name: 'Maturation', endDay: 100 }
     ]
+  },
+  {
+    id: 'arabian jasmine',
+    names: ['arabian jasmine', 'arabian_jasmine', 'arabianjasmine'],
+    maxGrowthDays: 130,
+    spacing: { row: 1.0, plant: 1.0 },
+    stages: [
+      { name: 'Early Seedling', endDay: 20 },
+      { name: 'Vegetative', endDay: 40 },
+      { name: 'Branching / Bush Development', endDay: 70 },
+      { name: 'Flower Bud Formation', endDay: 90 },
+      { name: 'Flowering / Blooming', endDay: 110 },
+      { name: 'Peak Flowering', endDay: 130 }
+    ]
+  },
+  {
+    id: 'crossandra',
+    names: ['crossandra', 'firecracker flower'],
+    maxGrowthDays: 150,
+    spacing: { row: 0.6, plant: 0.6 },
+    stages: [
+      { name: 'Seedling', endDay: 30 },
+      { name: 'Vegetative Growth', endDay: 60 },
+      { name: 'Branching', endDay: 90 },
+      { name: 'Bud Initiation', endDay: 110 },
+      { name: 'Continuous Flowering', endDay: 150 }
+    ]
+  },
+  {
+    id: 'chrysanthemum',
+    names: ['chrysanthemum', 'mums'],
+    maxGrowthDays: 120,
+    spacing: { row: 0.5, plant: 0.5 },
+    stages: [
+      { name: 'Rooting / Seedling', endDay: 20 },
+      { name: 'Vegetative', endDay: 50 },
+      { name: 'Pinching / Branching', endDay: 70 },
+      { name: 'Bud Formation', endDay: 90 },
+      { name: 'Flowering', endDay: 120 }
+    ]
   }
 ];
 

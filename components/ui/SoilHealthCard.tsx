@@ -38,6 +38,7 @@ export const SoilHealthCard = ({ farmId }: { farmId: number }) => {
             console.error("Error fetching soil:", err.response?.data || err.message || err);
             setError(true);
             setIsApiError(true);
+            // Optionally, we could store the actual error message to show to the user
           }
         }
       })

@@ -69,7 +69,7 @@ def get_market_prices(state: str, district: str, commodity: str, limit: int = 20
         
         try:
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req, timeout=10) as response:
+            with urllib.request.urlopen(req, timeout=3) as response:
                 if response.status != 200:
                     logger.error(f"Market API failed with status {response.status}")
                     return None
@@ -86,20 +86,15 @@ def get_market_prices(state: str, district: str, commodity: str, limit: int = 20
     try:
         # Fallback Level 1: state + district + commodity
         records = fetch_records(state, district, mapped_commodity) if state and district else None
-        
-        # Fallback Level 2: district + commodity
-        if (records is None or len(records) == 0) and district:
-            logger.info("Level 1 failed. Trying Level 2: district + commodity")
-            records = fetch_records("", district, mapped_commodity)
             
-        # Fallback Level 3: state + commodity
+        # Fallback Level 2: state + commodity
         if (records is None or len(records) == 0) and state:
-            logger.info("Level 2 failed. Trying Level 3: state + commodity")
+            logger.info("Level 1 failed. Trying Level 2: state + commodity")
             records = fetch_records(state, "", mapped_commodity)
             
-        # Fallback Level 4: commodity only
+        # Fallback Level 3: commodity only
         if records is None or len(records) == 0:
-            logger.info("Level 3 failed. Trying Level 4: commodity only")
+            logger.info("Level 2 failed. Trying Level 3: commodity only")
             records = fetch_records("", "", mapped_commodity)
             
         if records is None or len(records) == 0:
